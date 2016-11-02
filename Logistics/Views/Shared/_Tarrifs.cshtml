@@ -1,0 +1,24 @@
+﻿@model Firm
+@using Logistics.Models
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int i = 0;
+}
+
+<table>
+    @foreach (Tarif tarif in Model.Tarifs)
+    {
+        i++;
+        <tr>
+            <td>@i</td>
+            <td>@tarif.Destination</td>
+            <td>@tarif.Price</td>
+            @if (ViewContext.HttpContext.User.IsInRole("Фирма"))
+            {
+                <td>@Html.ActionLink("Изменить", "AddTarif", new { id = tarif.Id })</td>
+                <td>@Html.ActionLink("Удалить", "DeleteTarifs", new { id = tarif.Id })</td>
+            }
+        </tr>
+    }
+</table>
+

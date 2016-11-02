@@ -1,0 +1,19 @@
+﻿@model Firm
+@using Logistics.Models
+
+@{
+    int i = 0;
+}
+
+
+<table>
+    @foreach (Client client in Model.Clients)
+    {
+        i++;
+        <tr>
+            <td>@i</td>
+            <td>@client.Id</td>
+            <td>@client.Name</td>
+        </tr>
+    }
+</table>

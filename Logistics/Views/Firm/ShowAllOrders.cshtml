@@ -1,0 +1,60 @@
+﻿@model Firm
+@using Logistics.Models;
+@{
+    int i = 0;
+    Client bestClient = null;
+    double maxOrder = 0;
+}
+
+
+<table>
+    @if(Model != null)
+    { 
+    foreach (Client client in (IEnumerable<Client>)ViewBag.clients)
+    {
+        if (Model.Clients.Contains(client)) { 
+        i = 1;
+        double sum = 0;
+        maxOrder = 0;
+        <tr>
+            @client.Name
+        </tr>
+        foreach (Order order in client.Orders)
+        {
+            <tr>
+                <td>@i</td>
+                @foreach (Tarif t in Model.Tarifs)
+                {
+                    if (t.Id == order.TarifId)
+                    {
+                        <td>@t.Destination</td>
+                        <td>@t.Price</td>
+                        sum += t.Price;
+                        if (t.Price > maxOrder)
+                        {
+                            maxOrder = t.Price;
+                            bestClient = client;
+                        }
+                    }
+                }
+                <td>@order.CargoWeight</td>
+                <td>@order.Date.ToShortDateString()</td>
+            </tr>
+            i++;
+        }
+        <tr>
+            <td>
+                Сумма по всем заказам клиента = @sum руб.
+            </td>
+        </tr>
+    }
+    }
+ }
+</table>
+
+
+<div>
+    @if(bestClient != null){
+    @:Клиент с максимальным заказом: @bestClient.Name с суммой заказа @maxOrder рублей.
+    }
+</div>

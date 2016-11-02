@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Order>
+@using Logistics.Models;
+@{
+  //  Layout = null;
+    int i = 0;
+}
+
+
+<table>
+    @foreach (Order order in Model)
+    {
+        i++;
+        <tr>
+            <td>@i</td>
+            <td>@order.Tarif.Destination</td>
+            <td>@order.CargoWeight</td>
+            <td>@order.Tarif.Price</td>
+            <td>@order.Date.ToShortDateString()</td>
+            <td>@Html.ActionLink("Удалить", "DeleteOrder", new { order.Id })</td>
+        </tr>
+    }
+</table>
+

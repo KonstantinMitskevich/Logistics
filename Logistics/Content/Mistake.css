@@ -1,0 +1,29 @@
+﻿.field-validation-error {
+    color: #6699CC;
+    font-weight:bold;
+    text-decoration:underline;
+}
+ 
+.field-validation-valid {
+    display: inline;
+}
+ 
+input.input-validation-error {
+    border: 1px solid #006699;
+    background-color: silver;
+}
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+ 
+.validation-summary-errors {
+    color: #b94a48;
+}
+ 
+.validation-summary-valid {
+    display: inline;
+}
+
+.dl-horizontal dt {
+    white-space: normal;
+}

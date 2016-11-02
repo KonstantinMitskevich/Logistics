@@ -1,0 +1,22 @@
+﻿@using Logistics.Models
+@model IEnumerable<Client>
+@{
+    int i = 1;
+}
+
+<table>
+    @foreach (Client client in Model)
+    {
+        <tr>
+            <td> @i</td>
+            <td> @client.Name</td>
+            <td> @Html.ActionLink("Edit", "EditClient", new { client.Id })</td>
+            <td> @Html.ActionLink("Delete", "DeleteClient", new { client.Id })</td>
+        </tr>
+        i++;
+    }
+
+</table>
+<div>
+    @Html.ActionLink("Add", "Admin", null, new { @class = "btn btn-primary" })
+</div>

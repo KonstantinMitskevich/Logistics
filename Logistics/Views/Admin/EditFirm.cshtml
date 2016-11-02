@@ -1,0 +1,17 @@
+﻿@model Logistics.Models.Firm
+
+@using (Html.BeginForm("EditF", "Admin", FormMethod.Post))
+{
+    <fieldset>
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.UserId)
+        <p>
+            @Html.LabelFor(m => m.Name, "Наименование фирмы")
+            <br />
+            @Html.EditorFor(m => m.Name)
+        </p>
+        <p>
+            <input type="submit" value="Изменить" />
+        </p>
+    </fieldset>
+}
