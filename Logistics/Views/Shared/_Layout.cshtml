@@ -8,90 +8,92 @@
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/Mistake.css")" rel="stylesheet" type="text/css" />
 
+    <script src="~/Scripts/jquery-1.10.2.min.js" type="text/javascript"> </script>
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body style="padding-left: 15px; padding-right: 15px">
-    @if (ViewContext.HttpContext.User.IsInRole("Фирма"))
-    {
-        <h2>Меню фирмы: вы вошли как @User.Identity.Name</h2>
-        <div class="nav">
-            <ul>
-                <li>
-                    <a class="hide">Тарифы</a>
-                    <ul class="submenu">
-                        <li>@Html.ActionLink("Просмотр тарифов", "ShowTarifs", "Firm")</li>
-                        <li>@Html.ActionLink("Добавление тарифа", "AddTarif", "Firm")</li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="hide">Клиенты</a>
-                    <ul class="submenu">
-                        <li>@Html.ActionLink("Все клиенты", "ShowAllRegisteredClients","Firm")</li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="hide">Заказы</a>
-                    <ul class="submenu">
-                        <li>@Html.ActionLink("Все заказы", "ShowAllOrders", "Firm")</li>
-                    </ul>
-                </li>
-                <li>
-                   @Html.ActionLink("Выйти","LogOff","Account")
-                </li>
-            </ul>
-        </div>
-    }
-    else if (ViewContext.HttpContext.User.IsInRole("Клиент"))
-    {
-        <h2>Меню клиента: вы вошли как @User.Identity.Name</h2>
-        <div class="nav">
-            <ul>
-                <li>
-                    <a class="hide">Тарифы</a>
-                    <ul class="submenu">
-                        <li>@Html.ActionLink("Все тарифы", "ShowAllTarifs", "Client")</li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="hide">Заказы</a>
-                    <ul class="submenu">
-                        <li>@Html.ActionLink("Все заказы", "ShowAllOrders", "Client")</li>
-                        <li>@Html.ActionLink("Разместить заказ", "PlaceOrder", "Client")</li>
-                    </ul>
-                </li>
-                <li>
-                    @Html.ActionLink("Выйти", "LogOff", "Account")
-                </li>
-            </ul>
-        </div>
-    }
-    else if (ViewContext.HttpContext.User.IsInRole("Администратор"))
-    {
-        <h2>Меню администратора: вы вошли как @User.Identity.Name</h2>
-        <div class="nav">
-            <ul>
-                <li>
-                    <a class="hide">Компании</a>
-                    <ul class="submenu">
-                        <li>@Html.ActionLink(" Все Компании", "GetAllFirms", "Admin")</li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="hide">Клиенты</a>
-                    <ul class="submenu">
-                        <li>@Html.ActionLink("Все Клиенты", "GetAllClients", "Admin")</li>
-                    </ul>
-                </li>
-                <li>
-                    @Html.ActionLink("Выйти", "LogOff", "Account")
-                </li>
-            </ul>
-        </div>
-    }
-        
-    @RenderBody()  
-    @Scripts.Render("~/bundles/jquery", "~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/bootstrap")
+    <div class="body-content">
+        @if (ViewContext.HttpContext.User.IsInRole("Фирма"))
+        {
+            <h2>Меню фирмы: вы вошли как @User.Identity.Name</h2>
+            <div class="nav">
+                <ul>
+                    <li>
+                        <a class="hide">Тарифы</a>
+                        <ul class="submenu">
+                            <li>@Html.ActionLink("Просмотр тарифов", "ShowTarifs", "Firm")</li>
+                            <li>@Html.ActionLink("Добавление тарифа", "AddTarif", "Firm")</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="hide">Клиенты</a>
+                        <ul class="submenu">
+                            <li>@Html.ActionLink("Все клиенты", "ShowAllRegisteredClients", "Firm")</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="hide">Заказы</a>
+                        <ul class="submenu">
+                            <li>@Html.ActionLink("Все заказы", "ShowAllOrders", "Firm")</li>
+                        </ul>
+                    </li>
+                    <li>
+                        @Html.ActionLink("Выйти", "LogOff", "Account")
+                    </li>
+                </ul>
+            </div>
+        }
+        else if (ViewContext.HttpContext.User.IsInRole("Клиент"))
+        {
+            <h2>Меню клиента: вы вошли как @User.Identity.Name</h2>
+            <div class="nav">
+                <ul>
+                    <li>
+                        <a class="hide">Тарифы</a>
+                        <ul class="submenu">
+                            <li>@Html.ActionLink("Все тарифы", "ShowAllTarifs", "Client")</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="hide">Заказы</a>
+                        <ul class="submenu">
+                            <li>@Html.ActionLink("Все заказы", "ShowAllOrders", "Client")</li>
+                            <li>@Html.ActionLink("Разместить заказ", "PlaceOrder", "Client")</li>
+                        </ul>
+                    </li>
+                    <li>
+                        @Html.ActionLink("Выйти", "LogOff", "Account")
+                    </li>
+                </ul>
+            </div>
+        }
+        else if (ViewContext.HttpContext.User.IsInRole("Администратор"))
+        {
+            <h2>Меню администратора: вы вошли как @User.Identity.Name</h2>
+            <div class="nav">
+                <ul>
+                    <li>
+                        <a class="hide">Компании</a>
+                        <ul class="submenu">
+                            <li>@Html.ActionLink(" Все Компании", "GetAllFirms", "Admin")</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="hide">Клиенты</a>
+                        <ul class="submenu">
+                            <li>@Html.ActionLink("Все Клиенты", "GetAllClients", "Admin")</li>
+                        </ul>
+                    </li>
+                    <li>
+                        @Html.ActionLink("Выйти", "LogOff", "Account")
+                    </li>
+                </ul>
+            </div>
+        }
 
+        @RenderBody()
+        @Scripts.Render("~/bundles/jquery", "~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/bootstrap")
+    </div>
 </body>
 </html>

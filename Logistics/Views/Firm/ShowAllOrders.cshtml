@@ -5,56 +5,73 @@
     Client bestClient = null;
     double maxOrder = 0;
 }
+<link href="~/Content/Firm.css" type="text/css" rel="stylesheet" />
+<script src="~/Scripts/Firm.js" type="text/javascript"></script>
 
-
-<table>
-    @if(Model != null)
-    { 
-    foreach (Client client in (IEnumerable<Client>)ViewBag.clients)
-    {
-        if (Model.Clients.Contains(client)) { 
-        i = 1;
-        double sum = 0;
-        maxOrder = 0;
+<div class="back">
+    <h3 style="color:green">Все заказы  @Model.Name company</h3>
+    <table style="margin-top:10px;">
         <tr>
-            @client.Name
+            <th>№</th>
+            <th>Направление</th>
+            <th>Стоимость перевозки(BYR)</th>
+            <th>Вес(кг)</th>
+            <th>Дата отправления</th>
         </tr>
-        foreach (Order order in client.Orders)
+        @if (Model != null)
         {
-            <tr>
-                <td>@i</td>
-                @foreach (Tarif t in Model.Tarifs)
+            foreach (Client client in Model.Clients)
+            {
+                foreach (Client cl in (IEnumerable<Client>)ViewBag.clients)
                 {
-                    if (t.Id == order.TarifId)
+                    if (client.Equals(cl))
                     {
-                        <td>@t.Destination</td>
-                        <td>@t.Price</td>
-                        sum += t.Price;
-                        if (t.Price > maxOrder)
+                        i = 1;
+                        double sum = 0;
+                        maxOrder = 0;
+                        <tr>
+                            <td colspan="5" style="color:green; font-weight:bold; text-align: center">
+                                @cl.Name
+                            </td>
+                        </tr>
+                        foreach (Order order in cl.Orders)
                         {
-                            maxOrder = t.Price;
-                            bestClient = client;
+                            foreach (Tarif t in Model.Tarifs)
+                            {
+                                if (t.Id == order.TarifId)
+                                {
+
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@t.Destination</td>
+                                        <td>@t.Price</td>
+                                        <td>@order.CargoWeight</td>
+                                        <td>@order.Date.ToShortDateString()</td>
+                                    </tr>
+                                    sum += t.Price;
+                                    if (t.Price > maxOrder)
+                                    {
+                                        maxOrder = t.Price;
+                                        bestClient = client;
+                                    }
+                                    i++;
+                                }
+                            }
                         }
+                        <tr>
+                            <td colspan="2" style="padding-left:20px; font-weight:bold">
+                                Сумма
+                            </td>
+                            <td colspan="3" style="text-align:left; font-weight:bold; padding-left:5px">
+                                @sum
+                            </td>
+                        </tr>
                     }
                 }
-                <td>@order.CargoWeight</td>
-                <td>@order.Date.ToShortDateString()</td>
-            </tr>
-            i++;
+            }
         }
-        <tr>
-            <td>
-                Сумма по всем заказам клиента = @sum руб.
-            </td>
-        </tr>
-    }
-    }
- }
-</table>
-
-
-<div>
-    @if(bestClient != null){
-    @:Клиент с максимальным заказом: @bestClient.Name с суммой заказа @maxOrder рублей.
-    }
+    </table>
 </div>
+
+
+

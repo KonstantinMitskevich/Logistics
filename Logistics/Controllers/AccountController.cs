@@ -11,6 +11,15 @@ namespace Logistics.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
+        public ActionResult Index()
+        {
+
+            LoginModel logModel = new LoginModel();
+            ViewBag.regClint = new RegisterModel();
+            ViewBag.regFirm = new RegisterModelFirm();
+            return View(logModel);
+        }
+
         [HttpGet]
         public ActionResult Login()
         {
@@ -49,7 +58,7 @@ namespace Logistics.Controllers
             {
                 ModelState.AddModelError("","Пользователя с таким логином и паролем нет");
             }
-            return View(model);
+            return RedirectToAction("Index", "Admin",model);
         }
 
 
@@ -142,7 +151,7 @@ namespace Logistics.Controllers
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Index", "Account");
         }
     }
 }

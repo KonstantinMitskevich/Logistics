@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Logistics.Models;
 using System.Web.Security;
 using System.Data.Entity;
+using Newtonsoft.Json;
 
 namespace Logistics.Controllers
 {

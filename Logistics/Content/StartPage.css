@@ -1,0 +1,74 @@
+﻿body{
+ 
+  background-image:url(../Images/img1.jpg);
+  background-repeat:no-repeat;
+  background-size: cover;
+}
+
+.wrap-ul{
+  margin-top: 100px;
+  margin-left: 500px;
+  min-width: 400px;
+}
+
+.wrap-ul li{
+  display:inline-block;
+  position: relative;
+  width: 150px;
+  height: 50px;
+  border: 1px solid black;
+  background: rgba(206, 171, 107, 0.15);
+  text-align: center;
+  font: bold 20px serif;
+  line-height: 50px;
+}
+.wrap-ul a{
+  color: black;
+  text-decoration: none;
+  text-align: center;
+}
+
+.wrap-ul li:hover {
+  background: rgba(206, 171, 107, 0.30);
+}
+
+.wrap-ul li:first-child{
+  border-radius: 50px 0 0 0;
+}
+.wrap-ul li:last-child{
+  border-radius: 0 50px 0 0;
+}
+
+.wrap-ul .wrap-submenu{
+  position: absolute;
+  top:51px;
+  left: -41px;
+  font-size: 16px;
+ display:none;
+}
+
+.wrap-submenu>li{
+  display: block;
+  width: 150px;
+  height: 50px;
+  border: 1px solid black;
+  font-size: 16px;
+  border-radius: 0 0 0 0;
+  margin-top: -1px;
+}
+.wrap-submenu>li:first-child{
+   border-radius: 0 0 0 0;
+}
+.wrap-submenu>li:last-child{
+   border-radius: 0 0 0 50px;
+}
+
+.wrap-ul>li:last-child .wrap-submenu li:last-child{
+   border-radius: 0 0 50px 0;
+}
+
+.wrap-ul>li:hover .wrap-submenu{
+  display: block;
+}
+
+

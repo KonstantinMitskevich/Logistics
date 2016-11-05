@@ -4,57 +4,60 @@
     ViewBag.Title = "Разместить заказ";
 }
 
-<div>
-    @using (Html.BeginForm("PlaceOrder", "Client", FormMethod.Get))
+<div class="back">
+    <div>
+        @using (Html.BeginForm("PlaceOrder", "Client", FormMethod.Get))
+        {
+            <div>
+                Выберите фирму:
+            </div>
+            @Html.DropDownList("Id", ViewBag.Firms as SelectList)
+            <p>
+                <input type="submit" value="Получить тарифы" />
+            </p>
+        }
+    </div>
+
+    <h2>Разместить заказ</h2>
+    @using (Html.BeginForm("PlaceOrder", "Client", FormMethod.Post))
     {
-        <div>
-            Выберите фирму:
+        <div class="alert alert-danger">
+            @Html.ValidationSummary(true)
         </div>
-        @Html.DropDownList("Id", ViewBag.Firms as SelectList)
-        <p>
-            <input type="submit" value="Получить тарифы" />
-        </p>
+        <fieldset>
+            <legend>Новая заявка</legend>
+            <div class="editor-label">
+                @Html.LabelFor(o => o.TarifId)
+            </div>
+            <div>
+                @if (ViewBag.Tarifs != null)
+                {
+                    @Html.DropDownListFor(o => o.TarifId, ViewBag.Tarifs as SelectList)
+                }
+                @Html.ValidationMessageFor(o => o.TarifId)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(o => o.CargoWeight)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(o => o.CargoWeight)
+                @Html.ValidationMessageFor(o => o.CargoWeight)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(o => o.Date)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(o => o.Date, new { type = "date" })
+                @Html.ValidationMessageFor(o => o.Date)
+            </div>
+            @Html.HiddenFor(o => o.ClientId)
+            @if (ViewBag.FirmId != null)
+            {
+                @Html.Hidden("FirmId", (int)ViewBag.FirmId)
+            }
+            <p>
+                <input type="submit" value="Сохранить заявку" />
+            </p>
+        </fieldset>
     }
 </div>
-
-<h2>Разместить заказ</h2>
-@using (Html.BeginForm("PlaceOrder","Client", FormMethod.Post))
-{
-    <div class="alert alert-danger">
-        @Html.ValidationSummary(true) 
-    </div>
-    <fieldset>
-        <legend>Новая заявка</legend>
-        <div class="editor-label">
-            @Html.LabelFor(o => o.TarifId)
-        </div>
-        <div>
-            @if (ViewBag.Tarifs != null)
-        {
-                @Html.DropDownListFor(o => o.TarifId, ViewBag.Tarifs as SelectList)
-        }
-            @Html.ValidationMessageFor(o => o.TarifId)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(o => o.CargoWeight)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(o => o.CargoWeight)
-            @Html.ValidationMessageFor(o => o.CargoWeight)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(o => o.Date)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(o => o.Date, new { type = "date" })
-            @Html.ValidationMessageFor(o => o.Date)
-        </div>
-        @Html.HiddenFor(o => o.ClientId)
-        @if (ViewBag.FirmId != null) {
-            @Html.Hidden("FirmId", (int)ViewBag.FirmId)
-        }
-        <p>
-            <input type="submit" value="Сохранить заявку" />
-        </p>
-    </fieldset>
-    }

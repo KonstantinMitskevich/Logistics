@@ -1,0 +1,91 @@
+﻿@using System.Web.Optimization;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/StartPage.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/Modal.css" type="text/css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js" type="text/javascript"> </script>
+    <style>
+        #modal2 {
+        width: 300px;
+        height: 400px; /* Рaзмеры дoлжны быть фиксирoвaны */
+        border-radius: 5px;
+        border: 3px #000 solid;
+        background: #fff;
+        position: fixed; /* чтoбы oкнo былo в видимoй зoне в любoм месте */
+        top: 45%; /* oтступaем сверху 45%, oстaльные 5% пoдвинет скрипт */
+        left: 50%; /* пoлoвинa экрaнa слевa */
+        margin-top: -150px;
+        margin-left: -150px; /* тут вся мaгия центрoвки css, oтступaем влевo и вверх минус пoлoвину ширины и высoты сooтветственнo =) */
+        display: none; /* в oбычнoм сoстoянии oкнa не дoлжнo быть */
+        opacity: 0; /* пoлнoстью прoзрaчнo для aнимирoвaния */
+        z-index: 5; /* oкнo дoлжнo быть нaибoлее бoльшем слoе */
+        padding: 20px 10px;
+    }
+        #modal3 {
+        width: 300px;
+        height: 400px; /* Рaзмеры дoлжны быть фиксирoвaны */
+        border-radius: 5px;
+        border: 3px #000 solid;
+        background: #fff;
+        position: fixed; /* чтoбы oкнo былo в видимoй зoне в любoм месте */
+        top: 45%; /* oтступaем сверху 45%, oстaльные 5% пoдвинет скрипт */
+        left: 50%; /* пoлoвинa экрaнa слевa */
+        margin-top: -150px;
+        margin-left: -150px; /* тут вся мaгия центрoвки css, oтступaем влевo и вверх минус пoлoвину ширины и высoты сooтветственнo =) */
+        display: none; /* в oбычнoм сoстoянии oкнa не дoлжнo быть */
+        opacity: 0; /* пoлнoстью прoзрaчнo для aнимирoвaния */
+        z-index: 5; /* oкнo дoлжнo быть нaибoлее бoльшем слoе */
+        padding: 20px 10px;
+    }
+    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="~/Scripts/JsForModal.js"> </script>
+</head>
+<body>
+    <div class="wrap">
+        <ul class="wrap-ul">
+            <li>
+                Клиент
+                <ul class="wrap-submenu">
+                    <li id ="go">
+                        <a href="#" id="go">Войти</a>
+                        <li><a href="#" id="go1">Регистрация</a></li>
+                </ul>
+            </li>
+            <li>
+                Фирма
+                <ul class="wrap-submenu">
+                    <li><a href="#" id="go2">Войти</a>
+                    <li><a href="#" id="go3">Регистрация</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div id="modal_form">
+        <span id="modal_close">X</span>
+           @{Html.RenderAction("Login", "Account");}
+    </div>
+    <div id="modal2">
+        <span id="modal_close">X</span>
+           @{Html.RenderAction("RegisterClient", "Account");}
+    </div>
+    <div id="modal3">
+        <span id="modal_close">X</span>
+        @{Html.RenderAction("RegisterFirm", "Account");}
+    </div>
+    <div id="overlay"></div>
+
+    @Scripts.Render("~/bundels/jquery", "~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>

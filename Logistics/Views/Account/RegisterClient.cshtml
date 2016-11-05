@@ -6,7 +6,7 @@
 
 <h2>Регистрация</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("RegisterClient","Account", FormMethod.Post))
 {
     @Html.ValidationSummary(true);
     @Html.AntiForgeryToken();

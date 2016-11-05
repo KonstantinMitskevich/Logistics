@@ -5,7 +5,7 @@
 }
 <h2>Вход в систему</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Login","Account", FormMethod.Post))
 {
     @Html.ValidationSummary(true)
     @Html.AntiForgeryToken()

@@ -4,16 +4,34 @@
 @{
     int i = 0;
 }
+<link href="~/Content/Firm.css" type="text/css" rel="stylesheet" />
 
-
-<table>
-    @foreach (Client client in Model.Clients)
-    {
-        i++;
-        <tr>
-            <td>@i</td>
-            <td>@client.Id</td>
-            <td>@client.Name</td>
-        </tr>
+<style>
+    th:nth-child(2){
+        width: 30px;
     }
-</table>
+    th:nth-child(3){
+        width: 200px;
+    }
+    
+</style>
+
+<div class="back">
+    <h3>Все клиенты</h3>
+    <table>
+        <tr>
+            <th>№</th>
+            <th>ID</th>
+            <th>ФИО</th>
+        </tr>
+        @foreach (Client client in Model.Clients)
+        {
+            i++;
+            <tr>
+                <td>@i</td>
+                <td>@client.Id</td>
+                <td>@client.Name</td>
+            </tr>
+        }
+    </table>
+</div>

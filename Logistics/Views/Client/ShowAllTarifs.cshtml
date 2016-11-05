@@ -2,57 +2,69 @@
 @{
     int j = 0;
 }
+<link href="~/Content/Client.css" type="text/css" rel="stylesheet" />
 
-@using (Html.BeginForm("ShowAllTarifs", "Client", FormMethod.Get))
-{
-    <h4>Выберите фирму для просмотра тарифов</h4>
-    @Html.DropDownList("Id", ViewBag.Firms as SelectList)
-    <p>
-        <input type="submit" value="Получить тарифы"/>
-    </p>                                                   
-}
-
-<div>
-    <h4>
-        Введите направление для поиска тарифа
-    </h4>
+<div class="back">
     @using (Html.BeginForm("ShowAllTarifs", "Client", FormMethod.Get))
     {
-        <div class="editor-field">
-            @Html.TextBox("destination")
-        </div>
+        <h4>Выберите фирму для просмотра тарифов</h4>
+        @Html.DropDownList("Id", ViewBag.Firms as SelectList)
         <p>
-            <input type="submit" value="Поиск" />
+            <input type="submit" value="Получить тарифы" />
         </p>
     }
-</div>
-<div>
-    @if (ViewBag.tarifs != null)
-    {
-        <table>
-            @foreach (Tarif tarif in ViewBag.tarifs as IEnumerable<Tarif>)
-            {
-                j++;
-                <tr>
-                    <td>@j</td>
-                    <td>@tarif.Destination</td>
-                    <td>@tarif.Price</td>
-                </tr>
-            }
-        </table>
-    }
-</div>
 
-<div>
-    @if (ViewBag.Firm != null)
-    {
-        <ul>
-            @foreach (Tarif tarif in  ((Firm)ViewBag.Firm).Tarifs)
-            {
-            <li>
-                @tarif.Destination   @tarif.Price
-            </li>
-            }
-        </ul>
-    }
+    <div>
+        <h4>
+            Введите направление для поиска тарифа
+        </h4>
+        @using (Html.BeginForm("ShowAllTarifs", "Client", FormMethod.Get))
+        {
+            <div class="editor-field">
+                @Html.TextBox("destination")
+            </div>
+            <p>
+                <input type="submit" value="Поиск" />
+            </p>
+        }
+    </div>
+    <div>
+        @if (ViewBag.tarifs != null)
+        {
+            <table>
+                @foreach (Tarif tarif in ViewBag.tarifs as IEnumerable<Tarif>)
+                {
+                    j++;
+                    <tr>
+                        <td>@j</td>
+                        <td>@tarif.Destination</td>
+                        <td>@tarif.Price</td>
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+
+    <div style="margin:auto; width:500px">
+        @if (ViewBag.Firm != null)
+        {
+            int i = 1; 
+            <table class="back">
+                <tr>
+                    <th>№</th>
+                    <th>Направление</th>
+                    <th>Стоимость</th>
+                </tr>
+                    @foreach (Tarif tarif in ((Firm)ViewBag.Firm).Tarifs)
+                    {
+                        <tr>
+                            <td>@i</td>
+                           <td> @tarif.Destination </td>
+                           <td> @tarif.Price</td>
+                        </tr>
+                        i++;
+                    }
+            </table>
+        }
+    </div>
 </div>

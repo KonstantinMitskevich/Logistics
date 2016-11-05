@@ -57,9 +57,9 @@ namespace Logistics.Controllers
                     }
                     if (tarif != null && firm.Tarifs.Contains(nTarif)) // нет
                     {
-                        db.Tarifs.Remove(nTarif);
-                        tarif.FirmId = firm.Id;
-                        db.Tarifs.Add(tarif);
+                        nTarif.Price = tarif.Price;
+                        nTarif.Destination = tarif.Destination;
+                        db.Entry(nTarif).State = EntityState.Modified;
                         db.SaveChanges();
                         return RedirectToAction("ShowTarifs");
                     }
