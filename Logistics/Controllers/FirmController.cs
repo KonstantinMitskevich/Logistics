@@ -46,15 +46,15 @@ namespace Logistics.Controllers
             {
                 Firm firm = db.Firms.Where(f => f.UserId == user.Id).Include(f => f.Tarifs).FirstOrDefault();
                 Tarif nTarif = db.Tarifs.Find(tarif.Id); // проверка, если уже содержится в базе
+                if (tarif != null && !firm.Tarifs.Contains(nTarif)) // да
+                {
+                    tarif.FirmId = firm.Id;
+                    db.Tarifs.Add(tarif);
+                    db.SaveChanges();
+                    return RedirectToAction("ShowTarifs");
+                }
                 if (ModelState.IsValid)
                 {
-                    if (tarif != null && !firm.Tarifs.Contains(nTarif)) // да
-                    {
-                        tarif.FirmId = firm.Id;
-                        db.Tarifs.Add(tarif);
-                        db.SaveChanges();
-                        return RedirectToAction("ShowTarifs");
-                    }
                     if (tarif != null && firm.Tarifs.Contains(nTarif)) // нет
                     {
                         nTarif.Price = tarif.Price;
@@ -64,9 +64,9 @@ namespace Logistics.Controllers
                         return RedirectToAction("ShowTarifs");
                     }
                 }
-                else
+               else
                 {
-                    //  return RedirectToAction()
+                    return View("AddTarif");
                 }
                 return View(tarif);
             }
@@ -83,7 +83,6 @@ namespace Logistics.Controllers
             if (user != null)
             {
                 Firm firm = db.Firms.Where(f => f.UserId == user.Id).Include(f => f.Tarifs).FirstOrDefault();
-              //  return View(firm);
                 return PartialView("_Tarrifs", firm);
             }
             else
@@ -123,6 +122,26 @@ namespace Logistics.Controllers
             ViewBag.clients = db.Clients.Include(c => c.Orders);
             ViewBag.tarifs = db.Tarifs;
             return View(firm);
+        }
+
+        [HttpPost]
+        public ActionResult ShowAllOrders(int orderId, int status)
+        {
+            User user = db.Users.Where(u => u.Login == HttpContext.User.Identity.Name).FirstOrDefault();
+            if (user == null)
+            {
+                return RedirectToAction("LogOff","Account");
+            }
+
+            Order order = db.Orders.Find(orderId);
+            if (order != null)
+            {
+                order.Status = status;
+            }
+            db.Entry(order).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("ShowAllOrders");
         }
     }
 }

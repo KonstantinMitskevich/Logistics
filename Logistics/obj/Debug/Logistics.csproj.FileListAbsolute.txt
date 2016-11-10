@@ -27,4 +27,9 @@ C:\Users\Exim\Documents\Visual Studio 2013\Projects\Logistics\Logistics\bin\Antl
 C:\Users\Exim\Documents\Visual Studio 2013\Projects\Logistics\Logistics\bin\Newtonsoft.Json.xml
 C:\Users\Exim\Documents\Visual Studio 2013\Projects\Logistics\Logistics\obj\Debug\Logistics.dll
 C:\Users\Exim\Documents\Visual Studio 2013\Projects\Logistics\Logistics\obj\Debug\Logistics.pdb
+C:\Users\Exim\Documents\Visual Studio 2013\Projects\Logistics\Logistics\obj\Debug\Logistics.Migrations.AddOrderMigration.resources
+C:\Users\Exim\Documents\Visual Studio 2013\Projects\Logistics\Logistics\obj\Debug\Logistics.csproj.GenerateResource.Cache
 C:\Users\Exim\Documents\Visual Studio 2013\Projects\Logistics\Logistics\obj\Debug\Logistics.csprojResolveAssemblyReference.cache
+C:\Users\Exim\Documents\Visual Studio 2013\Projects\Logistics\Logistics\bin\MvcRouteTester.dll
+C:\Users\Exim\Documents\Visual Studio 2013\Projects\Logistics\Logistics\bin\MvcRouteTester.pdb
+C:\Users\Exim\Documents\Visual Studio 2013\Projects\Logistics\Logistics\bin\RouteDebugger.dll

@@ -4,27 +4,52 @@
 }
 <link href="~/Content/Client.css" type="text/css" rel="stylesheet" />
 
-<div class="back">
-    @using (Html.BeginForm("ShowAllTarifs", "Client", FormMethod.Get))
+<script type="text/javascript">
+    function OnFailure(request, error) {
+        $("#result").html("Искомый тариф не найден!");
+    }
+</script>
+@*<script>
+    $(function (){
+        $("form").submit(function () {
+            document.setcookie["myId"] = $("#id").val()
+        });
+      });
+</script>
+    *@
+
+<div">
+    @using (Ajax.BeginForm("TarifsSearch", "Client", new AjaxOptions
     {
-        <h4>Выберите фирму для просмотра тарифов</h4>
+        UpdateTargetId = "result",
+        LoadingElementDuration = 1000,
+        LoadingElementId = "loading",
+        OnFailure = "OnFailure",
+    }))
+    {
+        <h4>Выберите фирму для просмотра тарифов</h4> 
         @Html.DropDownList("Id", ViewBag.Firms as SelectList)
+       
+         var cookie = new HttpCookie("myId", Convert.ToString(ViewBag.Id)); // КАК ПРИВЯЗАТЬ iD К COOkIE???
+         Response.Cookies.Add(cookie);
         <p>
-            <input type="submit" value="Получить тарифы" />
+            <button id="but" type="submit"> Получить тарифы</button>
         </p>
     }
 
+    @*img id="loading" src="@Url.Content("~/Content/Images/loading.gif")" style="width: 100px; height:10px; display:none" />*@
+    <div id="result"></div>
     <div>
         <h4>
             Введите направление для поиска тарифа
         </h4>
-        @using (Html.BeginForm("ShowAllTarifs", "Client", FormMethod.Get))
+        @using (Ajax.BeginForm("TarifsSearchByDestination", "Client", new AjaxOptions { UpdateTargetId = "result", OnFailure = "OnFailure" }))
         {
-            <div class="editor-field">
+            <div>
                 @Html.TextBox("destination")
             </div>
             <p>
-                <input type="submit" value="Поиск" />
+                <button id="but" type="submit">Поиск</button>
             </p>
         }
     </div>
@@ -44,27 +69,8 @@
             </table>
         }
     </div>
+    
 
-    <div style="margin:auto; width:500px">
-        @if (ViewBag.Firm != null)
-        {
-            int i = 1; 
-            <table class="back">
-                <tr>
-                    <th>№</th>
-                    <th>Направление</th>
-                    <th>Стоимость</th>
-                </tr>
-                    @foreach (Tarif tarif in ((Firm)ViewBag.Firm).Tarifs)
-                    {
-                        <tr>
-                            <td>@i</td>
-                           <td> @tarif.Destination </td>
-                           <td> @tarif.Price</td>
-                        </tr>
-                        i++;
-                    }
-            </table>
-        }
-    </div>
-</div>
+
+
+

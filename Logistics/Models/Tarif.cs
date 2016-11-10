@@ -10,12 +10,12 @@ namespace Logistics.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage="Введите направление")]
         [Display(Name="Направление")]
         [MaxLength(50,ErrorMessage="Превышена максимальная длина записи")]
         public string Destination { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Введите цену")]
         [Display(Name = "Цена")]
         [DataType(DataType.Currency)]
         public double Price { get; set; } //добавить валидацию цены

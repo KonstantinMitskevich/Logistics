@@ -1,7 +1,13 @@
-﻿.field-validation-error {
+﻿fieldset{
+    position:relative;
+}
+
+.field-validation-error {
     color: red;
     font-weight:bold;
     text-decoration:none;
+    position:absolute;
+    left:650px;
 }
  
 .field-validation-valid {

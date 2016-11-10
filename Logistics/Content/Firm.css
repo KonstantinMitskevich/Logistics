@@ -1,4 +1,29 @@
-﻿table{
+﻿input,
+select{
+    width:150px;
+    height:30px;
+    border: 1px solid black;
+    border-style: inset; 
+    border-radius:4%;
+    margin: 5px;
+}
+
+#but {
+    width:120px;
+    height:50px;
+    border-style:outset;
+    border-radius:10%;
+    background-color: rgba(222,215,215, 0.8);
+    font-weight:bold;
+}
+
+#but:hover{
+    background-color: rgba(252,255,0, 0.7);
+    font-weight:bold;
+    cursor:pointer;
+}
+
+table{
   margin:auto;
   margin-top: 40px;
 }

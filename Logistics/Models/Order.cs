@@ -32,5 +32,8 @@ namespace Logistics.Models
         [DataType(DataType.Currency)]
         public int TarifId { get; set; }
         public Tarif Tarif { get; set; }
+
+        [Required]
+        public int Status { get; set; }
     }
 }

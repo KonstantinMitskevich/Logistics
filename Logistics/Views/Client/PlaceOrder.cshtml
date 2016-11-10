@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Разместить заказ";
 }
+<link href="~/Content/Client.css" type="text/css" rel="stylesheet" />
 
 <div class="back">
     <div>
@@ -11,13 +12,13 @@
             <div>
                 Выберите фирму:
             </div>
-            @Html.DropDownList("Id", ViewBag.Firms as SelectList)
+            @Html.DropDownList("Id", ViewBag.Firms as SelectList, new { @class="form"})
             <p>
-                <input type="submit" value="Получить тарифы" />
+                <button id="but" type="submit">Получить тарифы</button>
             </p>
         }
     </div>
-
+    <div id="results"></div>
     <h2>Разместить заказ</h2>
     @using (Html.BeginForm("PlaceOrder", "Client", FormMethod.Post))
     {
@@ -26,38 +27,40 @@
         </div>
         <fieldset>
             <legend>Новая заявка</legend>
-            <div class="editor-label">
-                @Html.LabelFor(o => o.TarifId)
-            </div>
-            <div>
-                @if (ViewBag.Tarifs != null)
+            <div class="forValidation">
+                <div class="editor-label">
+                    @Html.LabelFor(o => o.TarifId)
+                </div>
+                <div>
+                    @if (ViewBag.Tarifs != null)
+                    {
+                        @Html.DropDownListFor(o => o.TarifId, ViewBag.Tarifs as SelectList)
+                    }
+                    @Html.ValidationMessageFor(o => o.TarifId)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(o => o.CargoWeight)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(o => o.CargoWeight)
+                    @Html.ValidationMessageFor(o => o.CargoWeight)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(o => o.Date)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(o => o.Date, new { type = "date" })
+                    @Html.ValidationMessageFor(o => o.Date)
+                </div>
+                @Html.HiddenFor(o => o.ClientId)
+                @if (ViewBag.FirmId != null)
                 {
-                    @Html.DropDownListFor(o => o.TarifId, ViewBag.Tarifs as SelectList)
+                    @Html.Hidden("FirmId", (int)ViewBag.FirmId)
                 }
-                @Html.ValidationMessageFor(o => o.TarifId)
+                <p>
+                    <button id="but" type="submit">Сохранить заявку</button>
+                </p>
             </div>
-            <div class="editor-label">
-                @Html.LabelFor(o => o.CargoWeight)
-            </div>
-            <div class="editor-field">
-                @Html.TextBoxFor(o => o.CargoWeight)
-                @Html.ValidationMessageFor(o => o.CargoWeight)
-            </div>
-            <div class="editor-label">
-                @Html.LabelFor(o => o.Date)
-            </div>
-            <div class="editor-field">
-                @Html.TextBoxFor(o => o.Date, new { type = "date" })
-                @Html.ValidationMessageFor(o => o.Date)
-            </div>
-            @Html.HiddenFor(o => o.ClientId)
-            @if (ViewBag.FirmId != null)
-            {
-                @Html.Hidden("FirmId", (int)ViewBag.FirmId)
-            }
-            <p>
-                <input type="submit" value="Сохранить заявку" />
-            </p>
         </fieldset>
     }
 </div>

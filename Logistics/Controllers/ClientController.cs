@@ -65,6 +65,7 @@ namespace Logistics.Controllers
             {
                 Firm firm = db.Firms.Where(f => f.Id == FirmId).Include(f => f.Clients).FirstOrDefault();
                 Client client = db.Clients.Where(c => c.UserId == user.Id).Include(f => f.Firms).FirstOrDefault();
+                order.Status = 1;
                 client.Orders.Add(order);
                 if (!client.Firms.Contains(firm))
                 {
@@ -97,32 +98,35 @@ namespace Logistics.Controllers
         [HttpGet]
         public ActionResult ShowAllTarifs(int? id, string destination = null)
         {
-            ViewBag.Firms = new SelectList(db.Firms.Include(f => f.Tarifs),"Id","Name");
-            ViewBag.Firm = db.Firms.Where(f => f.Id == id).Include(f => f.Tarifs).FirstOrDefault();
-            ViewBag.tarifs = null;
-            if (destination != null)
-            {
-                IEnumerable<Tarif> tarifs = db.Tarifs.Where(t => t.Destination == destination.Trim()).ToList();
-                ViewBag.tarifs = tarifs;
-            }
+            ViewBag.Firms = new SelectList(db.Firms.Include(f => f.Tarifs), "Id", "Name");
+            ViewBag.Id = 2;
             return View();
         }
 
-        public ActionResult ViewTarrifs()
+        public ActionResult TarifsSearch(int id, int page = 1)
         {
-            
-            Firm firm = db.Firms.Include(f => f.Tarifs).FirstOrDefault();
-            ViewBag.tarif = null;
-            return PartialView("_Tarrifs", firm);
+
+            int pageSize = 5;
+            ViewBag.tarifs = db.Tarifs.Where(t => t.FirmId == id);
+            List<Tarif> tarifs = db.Tarifs.Where(t => t.FirmId == id).ToList();
+            IEnumerable<Tarif> tarifPerPages = tarifs.Skip((page - 1) * pageSize).Take(pageSize);
+            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = tarifs.Count };
+            IndexViewModel ivm = new IndexViewModel { PageInfo = pageInfo, Tarifs = tarifPerPages };
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("TarifsSearch", ivm);
+            }
+            return PartialView(ivm);
         }
 
-        [HttpPost]
-        public ActionResult ViewTarrifs(string destination)
+    
+        public ActionResult TarifsSearchByDestination(string destination = null)
         {
-            Firm firm = db.Firms.Include(f => f.Tarifs).FirstOrDefault();
-            IEnumerable<Tarif> tarif = db.Tarifs.Where(t => t.FirmId == db.Firms.FirstOrDefault().Id).Where(t => t.Destination == destination);
-            ViewBag.tarifs = tarif;
-            return PartialView("_Tarrifs", firm);
+            ViewBag.tarifs = db.Tarifs.Where(t => t.Destination == destination.Trim()).ToList();
+            return PartialView("TarifsSearchByDestination", ViewBag.tarifs);
         }
+
+       
     }
 }
+

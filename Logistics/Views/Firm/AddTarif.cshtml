@@ -2,35 +2,68 @@
 
 <link href="@Url.Content("~/Content/Firm.css")" rel="stylesheet" type="text/css" />
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal back">
-        <h4>Добавление тарифаf</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Destination, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Destination, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Destination, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.HiddenFor(t => t.FirmId)
-                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+<style>
+    .error {
+    position: absolute;
+    width: 200px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    margin-left: 10px;
+    display: inline-block;
+    vertical-align: top;
+    background: #ebf5ff;
+    border: 1px solid #b1d3f5;
 }
+.error::before {
+    content: url(http://zombiqwerty.ru/files/corner.gif);
+    width: 13px;
+    height: 6px;
+    position: absolute;
+    top: 4px;
+    left: -10px;
+}
+</style>
+<script type="text/javascript">
+        function OnSuccess() {
+            $("form").trigger("reset");
+        };
+       
+</script>
+
+<div id="result"></div>
+    @using (Html.BeginForm("AddTarif", "Firm"))
+    {
+        @Html.AntiForgeryToken()
+        <div class="back">
+            <div id="mistake"></div>
+            <h4>Добавление тарифа</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div>
+                @Html.LabelFor(model => model.Destination)
+                <div>
+                    @Html.EditorFor(model => model.Destination, new {@id="dest" })
+                    @Html.ValidationMessageFor(model => model.Destination)
+                </div>
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.Price)
+                <div>
+                    @Html.HiddenFor(t => t.FirmId)
+                    @Html.HiddenFor(t => t.Id)
+                    @Html.EditorFor(model => model.Price, new { @id = "price" })
+                    @Html.ValidationMessageFor(model => model.Price)
+                </div>
+            </div>
+
+            <div style="margin-top:10px">
+                <button type="submit" id="but">Создать</button>
+            </div>
+        </div>
+    }
+    
+
+
+
