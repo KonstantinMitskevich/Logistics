@@ -3,35 +3,35 @@
     int j = 0;
 }
 <link href="~/Content/Client.css" type="text/css" rel="stylesheet" />
+<style>
+    table{
+        cursor:pointer;
+    }
+</style>
 
 <script type="text/javascript">
-    function OnFailure(request, error) {
-        $("#result").html("Искомый тариф не найден!");
+    function OnSuccess(data) {
+        var result = $("#result");
+        result.empty();
+        result.append("<th>№</th><th>Направление</th><th>Цена</th>")
+        for (var i = 0; i < data.length; i++) {
+            result.append('<tr>' + '<td>' + (i + 1) + '</td>' + '<td>' + data[i].Destination + '</td>' + '<td>' + data[i].Price + '</td>' + '</tr>');
+        }
+        result.wrap("<table></table>");
     }
 </script>
-@*<script>
-    $(function (){
-        $("form").submit(function () {
-            document.setcookie["myId"] = $("#id").val()
-        });
-      });
-</script>
-    *@
 
 <div">
-    @using (Ajax.BeginForm("TarifsSearch", "Client", new AjaxOptions
+   @using (Ajax.BeginForm("ShowAlllTar", "Client", new AjaxOptions
     {
-        UpdateTargetId = "result",
-        LoadingElementDuration = 1000,
-        LoadingElementId = "loading",
-        OnFailure = "OnFailure",
+        OnSuccess = "OnSuccess"
     }))
     {
-        <h4>Выберите фирму для просмотра тарифов</h4> 
+        <h4>Выберите фирму для просмотра тарифов</h4>
         @Html.DropDownList("Id", ViewBag.Firms as SelectList)
-       
-         var cookie = new HttpCookie("myId", Convert.ToString(ViewBag.Id)); // КАК ПРИВЯЗАТЬ iD К COOkIE???
-         Response.Cookies.Add(cookie);
+
+     //   var cookie = new HttpCookie("myId", Convert.ToString(ViewBag.Id)); // КАК ПРИВЯЗАТЬ iD К COOkIE???
+     //   Response.Cookies.Add(cookie);
         <p>
             <button id="but" type="submit"> Получить тарифы</button>
         </p>
@@ -69,8 +69,4 @@
             </table>
         }
     </div>
-    
-
-
-
 

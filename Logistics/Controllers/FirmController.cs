@@ -18,6 +18,8 @@ namespace Logistics.Controllers
             return View();
         }
 
+
+
         [HttpGet]
         public ActionResult AddTarif(int id = 0)
         {

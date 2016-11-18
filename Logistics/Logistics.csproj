@@ -315,6 +315,7 @@
     <Content Include="Views\Client\TarifsSearch.cshtml" />
     <Content Include="Views\Client\TarifShow.cshtml" />
     <Content Include="Views\Client\TarifsSearchByDestination.cshtml" />
+    <Content Include="Views\Client\GetItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -33,24 +33,31 @@ namespace Logistics.Controllers
             return RedirectToAction("LogOff", "Account");
         }
 
+
         [HttpGet]
-        public ActionResult PlaceOrder(int? id)
+        public ActionResult PlaceOrder()
         {
             User user = db.Users.Where(u => u.Login == HttpContext.User.Identity.Name).FirstOrDefault();
             if (user != null)
             {
                 Client client = db.Clients.Where(c => c.UserId == user.Id).FirstOrDefault();
-                List<Firm> firms = db.Firms.Include(f => f.Tarifs).ToList();
-                ViewBag.Firms = new SelectList(firms, "Id", "Name");
+                int selectedIndex = 1;
+                SelectList firms = new SelectList(db.Firms, "Id", "Name", selectedIndex);
+                ViewBag.Firms = firms;
+                SelectList tarifs = new SelectList(db.Tarifs.Where(t => t.FirmId == selectedIndex), "Id", "Destination",selectedIndex);
+                ViewBag.Tarifs = tarifs;
+                ViewBag.FirmId = 1;
                 Order order = new Order();
                 order.ClientId = client.Id;
-                ViewBag.Tarifs = new SelectList(db.Tarifs.Where(t => t.FirmId == id), "Id", "Destination");
-                Firm firm = db.Firms.Find(id);
-                if(firm != null)
-                     ViewBag.FirmId = firm.Id;
                 return View(order);
             }
             return RedirectToAction("LogOff", "Account");
+        }
+
+        public ActionResult GetItems(int id)
+        {
+            ViewBag.FirmId = id;
+            return PartialView(db.Tarifs.Where(c => c.FirmId == id).ToList());
         }
 
         [HttpPost]
@@ -61,8 +68,8 @@ namespace Logistics.Controllers
             {
                 ModelState.AddModelError("Date", "Некорректная дата"); // не выводит ошибку
             }
-            if (ModelState.IsValid)
-            {
+           if (ModelState.IsValid)
+             {
                 Firm firm = db.Firms.Where(f => f.Id == FirmId).Include(f => f.Clients).FirstOrDefault();
                 Client client = db.Clients.Where(c => c.UserId == user.Id).Include(f => f.Firms).FirstOrDefault();
                 order.Status = 1;
@@ -79,7 +86,7 @@ namespace Logistics.Controllers
                 db.SaveChanges();
                 return View("Completed", firm);
             }
-            return RedirectToAction("PlaceOrder");
+           return RedirectToAction("PlaceOrder");
         }
  
         public ActionResult DeleteOrder(int id)
@@ -93,6 +100,13 @@ namespace Logistics.Controllers
                 return RedirectToAction("ShowAllOrders");
             }
             return RedirectToAction("ShowAllOrders");
+        }
+
+
+        public JsonResult ShowAlllTar(int id = 1)
+        {
+            var jsondata = db.Tarifs.Where(t => t.FirmId == id);
+            return Json(jsondata, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
